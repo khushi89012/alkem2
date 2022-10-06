@@ -76,8 +76,9 @@ export const Division = ({ id }) => {
     <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
       <option style={{ "width": "15px" }}>
 
-        {name ? name : "Select Depot"}
+        {name ? name : "Select Division"}
       </option>
+     
 
     </select>
 

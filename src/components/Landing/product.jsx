@@ -56,7 +56,7 @@ export const Product = ({ id }) => {
     useEffect(() => {
         if (id > 0 && locationCode && cfa_Code) {
             axios.get(`https://alkemapi.indusnettechnologies.com/api/product/all_product_list/E/${cfa_Code}?dist_id=${id}&page=1&sv=&div_code=${locationCode}&product_nm=`, { headers: { "Authorization": `Bearer ${tokStr}` } })
-                   
+                 
                 .then((res) => {
                     console.log(res.data.data)
                     setProductData(res.data.data)

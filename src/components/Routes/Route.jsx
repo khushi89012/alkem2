@@ -25,7 +25,7 @@ export const Routedata = () => {
 
             <Routes>
                 <Route path='/' element={<Login />}></Route>
-                <Route path='/landing' element={<PrivateRoute isauth={isauth}> <Landing /> </PrivateRoute>} ></Route>
+                <Route path='/landing' element={<PrivateRoute isauth={isauth }> <Landing /> </PrivateRoute>} />
             </Routes>
 
 

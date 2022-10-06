@@ -7,6 +7,17 @@ import { Division } from './Division'
 import { Location } from './Location'
 import { Product } from './product.jsx'
 import Topnav from './Navbar'
+
+
+
+
+
+
+
+
+
+
+
 export const Landing = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("")
@@ -74,7 +85,7 @@ export const Landing = () => {
 
     </div>
     <select style={{ "padding": "7px", "marginLeft": "10px" }} variant="primary" onClick={handleShow}>
-      <option> {name ? name : "Select Distributer"}</option>
+      <option> {name ? name : "Select Distributor"} </option>
 
     </select>
 

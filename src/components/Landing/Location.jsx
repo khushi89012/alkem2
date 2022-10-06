@@ -72,7 +72,7 @@ export const Location = ({ id }) => {
     return <>
 
         <select style={{"padding" :"7px","marginLeft":"10px"}} onClick={handleShow}>
-            <option>   {name ? name : "Select Divison"}</option>
+            <option>   {name ? name : "Select Depot"}</option>
 
         </select>
 

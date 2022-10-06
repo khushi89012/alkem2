@@ -20,7 +20,7 @@ function Topnav({logout}) {
             <Nav.Link eventKey={2} href="">
             <button className="btn btn-danger"  onClick={logout}>Logout</button>
             </Nav.Link>
-          =
+          
           </Nav>
         </Navbar.Collapse>
       </Container>

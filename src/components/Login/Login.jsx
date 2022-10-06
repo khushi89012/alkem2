@@ -89,7 +89,8 @@ function Logindata() {
         </div>
 
         <div className="button-container">
-          <input type="submit" />
+          {formik.errors.password || formik.errors.email ? <button className="btn btn-danger"  type="submit" disabled >Submit</button> : <button  className="btn btn-success"  type="submit">Submit</button> }
+          
         </div>
         {isError ? (<div style={{ color: "red", fontWeight: "bold", textAlign: "center" }}>{errorMsg}</div>) : null}
 
