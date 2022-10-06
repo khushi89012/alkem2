@@ -1,0 +1,42 @@
+[
+    {
+        "rank" :
+        [
+            {
+                "marks" : "91-100",
+                "grades" : "A1",
+                "remark" : "Excellent"
+            },
+            {
+                "marks" : "81-90",
+                "grades" : "A2",
+                "remark" : "Very good"
+            },
+            {
+                "marks" : "71-80",
+                "grades" : "B1",
+                "remark" : "Good"
+            },
+            {
+                "marks" : "61-70",
+                "grades" : "B2",
+                "remark" : "Satisfactory"
+            },
+            {
+                "marks" : "51-60",
+                "grades" : "C1",
+                "remark" : "Satisfactory"
+            },
+            {
+                "marks" : "41-50",
+                "grades" : "C2",
+                "remark" : "Unsatisfactory"
+            },
+            {
+                "marks" : "below 40",
+                "grades" : "D",
+                "remark" : "Fail / pass"
+            }
+        ]
+    }
+]
