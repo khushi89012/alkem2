@@ -1,7 +1,4 @@
-
 import { useNavigate } from 'react-router'
-import { useDispatch, useSelector } from 'react-redux'
-import { Login, Token } from '../Redux/action.js'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
@@ -23,8 +20,7 @@ export const Landing = () => {
 
   const [data, setData] = useState([])
 
-  const [locationCode, setLocationCode] = useState("")
-  const [locationData, setLocationData] = useState([])
+
 
   async function getData(tokStr) {
     await axios.get(api, { headers: { "Authorization": `Bearer ${tokStr}` } })
@@ -52,7 +48,6 @@ export const Landing = () => {
 
 
   const [distributor, setDistributor] = useState(0)
-  const [distributorData, setDistributorData] = useState([])
 
 
 
@@ -115,8 +110,8 @@ export const Landing = () => {
       </Modal.Footer>
     </Modal>
 
-    <Division id={distributor} />
 
+    <Division id={distributor} />
     <Location id={distributor} />
     <Product id={distributor} />
 

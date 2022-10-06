@@ -39,7 +39,10 @@ export const Location = ({ id }) => {
     }
 
     useEffect(() => {
-        getLocationCode(id, tokStr,locationCode)
+        if(id > 0 ){
+            getLocationCode(id, tokStr,locationCode)
+        }
+   
     }, [id, tokStr,locationCode])
 
     const [name, setName] = useState("");
@@ -58,7 +61,10 @@ export const Location = ({ id }) => {
             })
     }
     useEffect(() => {
-        getData(id, locationCode, tokStr)
+        if(id > 0 && locationCode){
+            getData(id, locationCode, tokStr)
+        }
+     
     }, [id, locationCode, tokStr])
 
 

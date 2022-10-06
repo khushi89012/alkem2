@@ -54,9 +54,9 @@ export const Product = ({ id }) => {
 
 
     useEffect(() => {
-        if (id > 0 && locationCode) {
+        if (id > 0 && locationCode && cfa_Code) {
             axios.get(`https://alkemapi.indusnettechnologies.com/api/product/all_product_list/E/${cfa_Code}?dist_id=${id}&page=1&sv=&div_code=${locationCode}&product_nm=`, { headers: { "Authorization": `Bearer ${tokStr}` } })
-                // https://alkemapi.indusnettechnologies.com/api/product/all_product_list/E/1902?dist_id=16893&page=1&sv=&div_code=4&product_nm=    
+                   
                 .then((res) => {
                     console.log(res.data.data)
                     setProductData(res.data.data)
@@ -69,9 +69,7 @@ export const Product = ({ id }) => {
     }, [id, locationCode, tokStr, cfa_Code])
 
 
-    const handleAdd = () => {
-        setAdd(add + 1)
-    }
+  
     return <>
 
 
@@ -98,7 +96,7 @@ export const Product = ({ id }) => {
                                 <div>Unit Qty : {el.inner_qty}</div>
                                 <div>Packing : {el.unit_description}</div>
                                 <div>
-                                    <button className="btn btn-warning" onClick={handleAdd}>Add</button>
+                                    <button className="btn btn-warning" >Add</button>
                                 </div>
                             </div>
                             <div style={{ "display": "flex", "justifyContent": "space-between" }} >
