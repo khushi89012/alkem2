@@ -10,8 +10,9 @@ import { Location } from './Location'
 
 
 
-export const Division = ({ id }) => {
+export const Division = (props) => {
 
+  const {id,click} = props;
   const [show, setShow] = useState(false);
   const [name, setName] = useState("")
   const handleClose = () => setShow(false);
@@ -43,7 +44,6 @@ export const Division = ({ id }) => {
     await axios.get("https://alkemapi.indusnettechnologies.com/api/feed/dist_divisions/E?dist_id=" + id, { headers: { "Authorization": `Bearer ${tokStr}` } })
       .then((res) => {
         console.log("this is distributer data for second input feild ", res.data.data)
-
         setDistributorData(res.data.data)
 
         // console.log(locationCode)
@@ -61,6 +61,7 @@ export const Division = ({ id }) => {
   useEffect(() => {
     if (id > 0) {
       getData(id, tokStr)
+      setName("")
     }
 
   }, [id])
@@ -96,7 +97,7 @@ if(id == null){
     <div style={{ "display": "flex" }}>
       <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
         <option style={{ "width": "15px" }}>
-          {name ? name : "Select Division"}
+          {name  ? name : "Select Division"}
         </option>
 
 

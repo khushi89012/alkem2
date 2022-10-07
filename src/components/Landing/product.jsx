@@ -8,14 +8,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 export const Product = (props) => {
-    const { id, locationCode, cfa_code } = props
+    const { id, locationCode, cfa_code } = props;
 
     console.log(props)
-    const [show, setShow] = useState(false);
-    const [add, setAdd] = useState(1)
-    let product = {}
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
 
     const tokendata = JSON.parse(localStorage.getItem("persist:root"))
@@ -43,7 +38,7 @@ export const Product = (props) => {
         }
     }, [id, locationCode, tokStr, cfa_code])
 
-    if (id === "" && (!cfa_code) && (!locationCode) ) {
+    if (id === "" || locationCode==="" || cfa_code === "") {
         return (
             <div></div>
         )
@@ -52,7 +47,7 @@ export const Product = (props) => {
         return <>
         
 
-        <h3 className="m-5 text-danger fw-bold">No Records Found !</h3>
+        <h3 className="m-auto text-danger fw-bold">No Record Found !</h3>
         </>
     }
 

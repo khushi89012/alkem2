@@ -67,9 +67,11 @@ export const Landing = () => {
 
   const changedValue = (e) => {
     console.log("e.data>>>", e.target)
+    
     setDistributor(e.target.value)
     handleClose()
     setName(e.target.name)
+
   }
 
   const handleClear = ()=>{
@@ -128,7 +130,7 @@ export const Landing = () => {
     </Modal>
 
 
-    <Division id={distributor} />
+    <Division id={distributor}  />
    {/* <Location id={distributor} /> */}
     {/* <Product id={distributor} /> */}
 
