@@ -23,6 +23,7 @@ const validationSchema = yup.object().shape({
     .string()
     .trim("white space is not allowed")
     .min(3, "Password must be 3 characters at minimum")
+    .max(8,"Password must be 8 characters at max")
     .required("Password is required"),
 });
 

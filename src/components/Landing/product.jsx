@@ -7,7 +7,10 @@ import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-export const Product = ({ id }) => {
+export const Product = (props) => {
+    const { id, locationCode, cfa_code } = props
+
+    console.log(props)
     const [show, setShow] = useState(false);
     const [add, setAdd] = useState(1)
     let product = {}
@@ -19,44 +22,16 @@ export const Product = ({ id }) => {
     let token = tokendata.partData;
     let tokStr = JSON.parse(token).token
 
-    const [cfa_Code, setCfa_Code] = useState("")
-    const [locationCode, setLocationCode] = useState("")
+
+
     const [productData, setProductData] = useState([])
-    useEffect(() => {
-        if (id > 0) {
-            axios.get("https://alkemapi.indusnettechnologies.com/api/feed/dist_divisions/E?dist_id=" + id, { headers: { "Authorization": `Bearer ${tokStr}` } })
-                .then((res) => {
-                    console.log("this is distributer data for second input feild ", res.data.data)
-                    setLocationCode(res.data.data[0].division_code)
-                    console.log(locationCode)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
-    }, [id])
 
-    async function getData(id, locationCode, tokStr) {
-        await axios.get(`https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${id}&dc=${locationCode}`, { headers: { "Authorization": `Bearer ${tokStr}` } })
-            .then((res) => {
-                console.log(res.data.data)
-                setCfa_Code(res.data.data[0].cfa_code)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-    useEffect(() => {
-        if (id > 0) {
-            getData(id, locationCode, tokStr)
-        }
-    }, [id, locationCode])
 
 
     useEffect(() => {
-        if (id > 0 && locationCode && cfa_Code) {
-            axios.get(`https://alkemapi.indusnettechnologies.com/api/product/all_product_list/E/${cfa_Code}?dist_id=${id}&page=1&sv=&div_code=${locationCode}&product_nm=`, { headers: { "Authorization": `Bearer ${tokStr}` } })
-                 
+        if (id > 0 && locationCode && cfa_code) {
+            axios.get(`https://alkemapi.indusnettechnologies.com/api/product/all_product_list/E/${cfa_code}?dist_id=${id}&page=1&sv=&div_code=${locationCode}&product_nm=`, { headers: { "Authorization": `Bearer ${tokStr}` } })
+
                 .then((res) => {
                     console.log(res.data.data)
                     setProductData(res.data.data)
@@ -66,15 +41,22 @@ export const Product = ({ id }) => {
                     console.log(err)
                 })
         }
-    }, [id, locationCode, tokStr, cfa_Code])
+    }, [id, locationCode, tokStr, cfa_code])
 
+    if (id === "" && (!cfa_code) && (!locationCode) ) {
+        return (
+            <div></div>
+        )
+    }
+    else if(productData.length === 0){
+        return <>
+        
 
-  
+        <h3 className="m-5 text-danger fw-bold">No Records Found !</h3>
+        </>
+    }
+
     return <>
-
-
-
-
         <div >
 
 

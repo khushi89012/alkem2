@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import { Location } from './Location'
 
 
 
@@ -20,9 +20,8 @@ export const Division = ({ id }) => {
   const tokendata = JSON.parse(localStorage.getItem("persist:root"))
   let token = tokendata.partData;
   let tokStr = JSON.parse(token).token
-  const division_code = 33;
-  // const [locationCode, setLocationCode] = useState("")
-  // const [locationData, setLocationData] = useState([])
+  const [locationCode, setLocationCode] = useState("")
+
 
   const handleClick = () => {
     localStorage.clear()
@@ -46,7 +45,7 @@ export const Division = ({ id }) => {
         console.log("this is distributer data for second input feild ", res.data.data)
 
         setDistributorData(res.data.data)
-        // setLocationCode(res.data.data[0].division_code)
+
         // console.log(locationCode)
       })
       .catch((err) => {
@@ -54,7 +53,10 @@ export const Division = ({ id }) => {
       })
   }
 
-
+  const handleClear = () => {
+    setName("")
+    setLocationCode("")
+  }
 
   useEffect(() => {
     if (id > 0) {
@@ -63,24 +65,51 @@ export const Division = ({ id }) => {
 
   }, [id])
 
-  var handleCheckBox;
+if(id == null){
+  setName("")
+}
 
-  handleCheckBox = (e) => {
-    console.log(e.target.value)
+
+  const handleCheckBox = async (e) => {
+
     setName(e.target.value)
+    setLocationCode(e.target.name)
+    handleClose()
+  
+
   }
+
+
+  if (id === "") {
+    return (
+      <div>
+        <input type="text" placeholder="Select Division" disabled />
+      </div>
+    )
+  }
+
+
 
 
   return <>
 
-    <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
-      <option style={{ "width": "15px" }}>
+    <div style={{ "display": "flex" }}>
+      <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
+        <option style={{ "width": "15px" }}>
+          {name ? name : "Select Division"}
+        </option>
 
-        {name ? name : "Select Division"}
-      </option>
-     
 
-    </select>
+      </select>
+
+      <button onClick={handleClear}>Clear</button>
+
+    </div>
+
+
+
+
+
 
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -91,10 +120,11 @@ export const Division = ({ id }) => {
       </Modal.Header>
       <Modal.Body>
         <div >
-          <input type="search" placeholder="Select Depot" className="p-2 mb-2" style={{ width: "100%", padding: "5px" }} />
+          <input type="search" placeholder="Select Division" className="p-2 mb-2" style={{ width: "100%", padding: "5px" }} />
           {distributorData.map((el, i) => (
             <div>
               <input type="checkbox"
+
                 onClick={(e) => { handleCheckBox(e) }}
                 value={el.division_name}
                 name={el.division_code}
@@ -116,5 +146,7 @@ export const Division = ({ id }) => {
         </Button>
       </Modal.Footer>
     </Modal>
+
+    <Location id={id} locationCode={locationCode} />
   </>
 }

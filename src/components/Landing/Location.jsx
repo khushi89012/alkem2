@@ -5,14 +5,15 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import {Product} from  './product.jsx'
 
 
 
 
-
-export const Location = ({ id }) => {
+export const Location = (props) => {
+    const {id, locationCode } = props
     const [show, setShow] = useState(false);
-    let product = {}
+    const [cfa_Code, setCfa_Code] = useState("")
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -22,28 +23,10 @@ export const Location = ({ id }) => {
     let tokStr = JSON.parse(token).token
 
 
-    const [locationCode, setLocationCode] = useState("")
+    // const [locationCode, setLocationCode] = useState("")
     const [locationData, setLocationData] = useState([])
 
-    async function getLocationCode(id, tokStr,locationCode){
-        await axios.get("https://alkemapi.indusnettechnologies.com/api/feed/dist_divisions/E?dist_id=" + id, { headers: { "Authorization": `Bearer ${tokStr}` } })
-            .then((res) => {
-                console.log("this is distributer data for second input feild ", res.data.data)
 
-                setLocationCode(res.data.data[0].division_code)
-                console.log(locationCode)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-
-    useEffect(() => {
-        if(id > 0 ){
-            getLocationCode(id, tokStr,locationCode)
-        }
-   
-    }, [id, tokStr,locationCode])
 
     const [name, setName] = useState("");
 
@@ -53,6 +36,7 @@ export const Location = ({ id }) => {
                 console.log(res.data.data)
                 // setData(res.data.data)
                 setLocationData(res.data.data)
+                setCfa_Code(res.data.data[0].cfa_code)
                 setName(res.data.data[0].location_name)
 
             })
@@ -67,28 +51,55 @@ export const Location = ({ id }) => {
      
     }, [id, locationCode, tokStr])
 
+if(id === "" || !locationCode){
+    return (
+        <div>
+            <input type="text" placeholder="Select Depot" disabled/>
+        </div>
+    )
+}
+
+const handleClear = ()=>{
+
+    setCfa_Code("")
+    setName("")
+}
+
+
+
 
 
     return <>
 
-        <select style={{"padding" :"7px","marginLeft":"10px"}} onClick={handleShow}>
-            <option>   {name ? name : "Select Depot"}</option>
 
+<div style={{ "display": "flex"}}>
+<select style={{"padding" :"7px","marginLeft":"10px"}} onClick={handleShow}>
+            <option>   {name ? name : "Select Depot"}</option>
         </select>
+
+    <button onClick={handleClear}>Clear</button>
+
+    </div>
+
+
+
+
+
+      
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Select Division</Modal.Title>
+                <Modal.Title>Select Depot</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div >
-                    <input type="text" placeholder="Select Division" />
+                    <input type="text" placeholder="Select Depot" />
                     <div>
                         {locationData ?
                             (<div>
                                 {locationData.map(el =>
                                     <div>
-                                        <input type="radio" />
+                                        <input type="radio"  />
                                         <label>{el.location_name}</label>
                                     </div>
 
@@ -103,7 +114,7 @@ export const Location = ({ id }) => {
             </Modal.Body>
             
         </Modal>
-
+<Product id={id} locationCode={locationCode} cfa_code={cfa_Code}/>
 
     </>
 }

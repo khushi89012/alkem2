@@ -28,6 +28,7 @@ export const Landing = () => {
   const tokendata = JSON.parse(localStorage.getItem("persist:root"))
   let token = tokendata.partData;
   let tokStr = JSON.parse(token).token
+  const [clear,setClear] = useState(false)
 
   const [data, setData] = useState([])
 
@@ -58,7 +59,7 @@ export const Landing = () => {
   }
 
 
-  const [distributor, setDistributor] = useState(0)
+  const [distributor, setDistributor] = useState("")
 
 
 
@@ -71,6 +72,11 @@ export const Landing = () => {
     setName(e.target.name)
   }
 
+  const handleClear = ()=>{
+    setDistributor("")
+    setName("")
+
+  }
 
 
 
@@ -80,14 +86,16 @@ export const Landing = () => {
   return <div>
     <Topnav logout={handleClick} />
     <br></br>
-    <div>
+    <div >
+   <div style={{ "display": "flex"}}>
+          <select style={{ "padding": "7px", "marginLeft": "10px", "display":"flex" }} variant="primary" onClick={handleShow}>
+      <option> {name ? name : "Select Distributor"} </option>
+    </select>
 
+    <button onClick={handleClear}>Clear</button>
 
     </div>
-    <select style={{ "padding": "7px", "marginLeft": "10px" }} variant="primary" onClick={handleShow}>
-      <option> {name ? name : "Select Distributor"} </option>
 
-    </select>
 
     <Modal show={show} onHide={handleClose} size="lg">
       <Modal.Header closeButton>
@@ -108,8 +116,6 @@ export const Landing = () => {
           ))}
 
         </div>
-
-
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -123,8 +129,11 @@ export const Landing = () => {
 
 
     <Division id={distributor} />
-    <Location id={distributor} />
-    <Product id={distributor} />
+   {/* <Location id={distributor} /> */}
+    {/* <Product id={distributor} /> */}
+
+    </div>
+ 
 
   </div>
 }
