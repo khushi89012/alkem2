@@ -5,14 +5,14 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Product } from './product.jsx'
+import {Product} from  './product.jsx'
 
 
 
 
 export const Location = (props) => {
     console.log(props)
-    const { id, locationCode } = props
+    const {id, locationCode } = props
     const [show, setShow] = useState(false);
     const [cfa_Code, setCfa_Code] = useState("")
     const handleClose = () => setShow(false);
@@ -27,7 +27,7 @@ export const Location = (props) => {
     const [locationData, setLocationData] = useState([])
 
     const [name, setName] = useState("");
-    async function getData(id, locationCode, tokStr) {
+    async function getData(id, locationCode, tokStr){
         await axios.get(`https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${id}&dc=${locationCode}`, { headers: { "Authorization": `Bearer ${tokStr}` } })
             .then((res) => {
                 console.log(res.data.data)
@@ -41,34 +41,34 @@ export const Location = (props) => {
             })
     }
     useEffect(() => {
-        if (id > 0 && locationCode) {
+        if(id > 0 && locationCode){
             getData(id, locationCode, tokStr)
             setName("")
         }
-
+     
     }, [id, locationCode, tokStr])
 
-    if (id === "" && locationCode === "") {
-        return (
-            <div>
-                <input type="text" placeholder="Select Depot" disabled />
-            </div>
-        )
-    }
-
-    const handleClear = () => {
-        setName("");
-        setCfa_Code("")
-    }
-    return <>
-        <div style={{ "display": "flex" }}>
-            <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
-                <option>   {name ? name : "Select Depot"}</option>
-            </select>
-
-            <button onClick={() => { handleClear() }}>Clear</button>
-
+if(id === "" && locationCode === ""){
+    return (
+        <div>
+            <input type="text" placeholder="Select Depot" disabled/>
         </div>
+    )
+}
+
+const handleClear = ()=>{
+    setName("");
+    setCfa_Code("")
+}
+    return <>
+<div style={{ "display": "flex"}}>
+<select style={{"padding" :"7px","marginLeft":"10px"}} onClick={handleShow}>
+            <option>   {name ? name : "Select Depot"}</option>
+        </select>
+
+    <button onClick={()=>{handleClear()}}>Clear</button>
+
+    </div>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Select Depot</Modal.Title>
@@ -81,7 +81,7 @@ export const Location = (props) => {
                             (<div>
                                 {locationData.map(el =>
                                     <div>
-                                        <input type="radio" />
+                                        <input type="radio"  />
                                         <label>{el.location_name}</label>
                                     </div>
 
@@ -94,9 +94,9 @@ export const Location = (props) => {
 
 
             </Modal.Body>
-
+            
         </Modal>
-        <Product id={id} locationCode={locationCode} cfa_code={cfa_Code} />
+<Product id={id} locationCode={locationCode} cfa_code={cfa_Code}/>
 
     </>
 }

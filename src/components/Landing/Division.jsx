@@ -10,9 +10,8 @@ import { Location } from './Location'
 
 
 
-export const Division = (props) => {
+export const Division = ({ id }) => {
 
-  const {id,click} = props;
   const [show, setShow] = useState(false);
   const [name, setName] = useState("")
   const handleClose = () => setShow(false);
@@ -28,22 +27,14 @@ export const Division = (props) => {
     localStorage.clear()
     navigate("/")
   }
-
-
-
-  const [distributor, setDistributor] = useState("")
   const [distributorData, setDistributorData] = useState([])
-
-
-  const handleChange = (e) => {
-    console.log(e.customer_code)
-  }
-
+  
   async function getData(id, tokStr) {
     console.log("xxxxxxxxx", id)
     await axios.get("https://alkemapi.indusnettechnologies.com/api/feed/dist_divisions/E?dist_id=" + id, { headers: { "Authorization": `Bearer ${tokStr}` } })
       .then((res) => {
-        console.log("this is distributer data for second input feild ", res.data.data)
+        console.log("this is distributer data for second input field ", res.data.data)
+
         setDistributorData(res.data.data)
 
         // console.log(locationCode)
@@ -54,33 +45,21 @@ export const Division = (props) => {
   }
 
   const handleClear = () => {
-    setName("")
     setLocationCode("")
+    setName("")
   }
 
   useEffect(() => {
     if (id > 0) {
       getData(id, tokStr)
-      setName("")
+    setName("")
     }
 
   }, [id])
-
-if(id == null){
-  setName("")
-}
-
-
   const handleCheckBox = async (e) => {
-
     setName(e.target.value)
     setLocationCode(e.target.name)
-    handleClose()
-  
-
   }
-
-
   if (id === "") {
     return (
       <div>
@@ -97,7 +76,8 @@ if(id == null){
     <div style={{ "display": "flex" }}>
       <select style={{ "padding": "7px", "marginLeft": "10px" }} onClick={handleShow}>
         <option style={{ "width": "15px" }}>
-          {name  ? name : "Select Division"}
+
+          {name ? name : "Select Division"}
         </option>
 
 

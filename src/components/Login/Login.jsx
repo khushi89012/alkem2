@@ -44,8 +44,6 @@ function Logindata() {
     validationSchema,
   });
 
-
-  console.log("tokendata",tokendata)
   const email_Props = formik.getFieldProps("email");
   const password_Props = formik.getFieldProps("password");
 

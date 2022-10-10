@@ -8,49 +8,59 @@ import { Location } from './Location'
 import { Product } from './product.jsx'
 import Topnav from './Navbar'
 
-
-
-
-
-
-
-
-
-
-
 export const Landing = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("")
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate()
-  const api = "https://alkemapi.indusnettechnologies.com/api/distributor/distributor_list/E?dn=&page_no=1"
   const tokendata = JSON.parse(localStorage.getItem("persist:root"))
   let token = tokendata.partData;
   let tokStr = JSON.parse(token).token
-  const [clear,setClear] = useState(false)
 
   const [data, setData] = useState([])
 
+  const [search, setSearch] = useState("a");
+const debouncedSearch = useDebounce(search, 150);
 
+useEffect(() => {
+function fetchData() {
+    setData([]);
 
-  async function getData(tokStr) {
-    await axios.get(api, { headers: { "Authorization": `Bearer ${tokStr}` } })
-      .then((res) => {
-        // console.log(res.data.data)
-        setData(res.data.data)
+  axios.get(`https://alkemapi.indusnettechnologies.com/api/distributor/distributor_list/E?dn=${debouncedSearch}&page_no=1`, { headers: { "Authorization": `Bearer ${tokStr}` } })
+    .then(res => {
+      // setNotices(response.data.hits);
+      console.log(res.data.data)
+      setData(res.data.data)
+    });
+}
+  if (debouncedSearch) fetchData();
+}, [debouncedSearch, tokStr ]);
 
-
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
-    getData(tokStr)
-  }, [tokStr])
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+  return debouncedValue;
+}
+
+
+  // async function getData(tokStr) {
+  //   await axios.get(api, { headers: { "Authorization": `Bearer ${tokStr}` } })
+  //     .then((res) => {
+  //       // console.log(res.data.data)
+  //       setData(res.data.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
 
 
   const handleClick = () => {
@@ -60,18 +70,11 @@ export const Landing = () => {
 
 
   const [distributor, setDistributor] = useState("")
-
-
-
-
-
   const changedValue = (e) => {
     console.log("e.data>>>", e.target)
-    
     setDistributor(e.target.value)
     handleClose()
     setName(e.target.name)
-
   }
 
   const handleClear = ()=>{
@@ -105,7 +108,8 @@ export const Landing = () => {
       </Modal.Header>
       <Modal.Body>
         <div name="distributor" id="distributor" value={distributor} >
-          <input type="search" placeholder="Distributor" className="p-2 mb-2" style={{ width: "100%", padding: "5px" }} />
+          <input type="search" placeholder="Distributor" 
+          onChange={(e) => setSearch(e.target.value)} className="p-2 mb-2" style={{ width: "100%", padding: "5px" }} />
           {data.map((el, i) => (
 
             <div className="border p-2">
@@ -130,7 +134,7 @@ export const Landing = () => {
     </Modal>
 
 
-    <Division id={distributor}  />
+    <Division id={distributor} />
    {/* <Location id={distributor} /> */}
     {/* <Product id={distributor} /> */}
 

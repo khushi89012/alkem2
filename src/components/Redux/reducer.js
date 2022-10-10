@@ -1,5 +1,6 @@
 const initialState = {
- token:""
+ token:"",
+ islogged:false
 };
 
 
@@ -42,7 +43,8 @@ export const partData = (state = initialState, { type, payload }) => {
       case "TOKEN":
          return {
             ...state,
-           token: payload 
+           token: payload ,
+           islogged:true
          };   
       default:
          return state;
